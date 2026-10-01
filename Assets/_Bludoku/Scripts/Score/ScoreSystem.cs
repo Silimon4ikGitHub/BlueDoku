@@ -18,9 +18,9 @@ namespace _Bludoku.Scripts.Score
         public static int HighScore => _highScore;
         public static bool IsBoosterEnabled => _isBoosterEnabled;
 
-        public static void SetBoosterEnabled(bool enabled)
+        public static void UpdateBoosterData(BoosterData data)
         {
-            _isBoosterEnabled = enabled;
+            _isBoosterEnabled = data.IsBusted;
         }
 
         public static void LoadScore()

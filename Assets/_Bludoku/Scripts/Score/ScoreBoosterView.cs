@@ -1,12 +1,14 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using TMPro;
 
 namespace _Bludoku.Scripts.Score
 {
     public class ScoreBoosterView : MonoBehaviour
     {
         [SerializeField] private Transform booster;
+        [SerializeField] private TextMeshProUGUI _comboCount;
         
         private bool _isBoosterEnabled;
         private Tween _pulseTween;
@@ -16,16 +18,17 @@ namespace _Bludoku.Scripts.Score
             booster.localScale = Vector3.zero;
         }
 
-        public void SetBoosterEnabled(bool boosterEnabled)
+        public void SetBoosterEnabled(BoosterData data)
         {
-            if (_isBoosterEnabled == boosterEnabled)
+            if (_isBoosterEnabled == data.IsBusted)
                 return;
 
             booster.DOKill();
             _pulseTween?.Kill();
             _pulseTween = null;
+            _comboCount.text = "X " + data.CurrentComboCount.ToString();
 
-            if (boosterEnabled)
+            if (data.IsBusted)
             {
                 booster.transform.DOScale(Vector3.one, 0.8f)
                     .SetEase(Ease.OutElastic)
@@ -36,7 +39,7 @@ namespace _Bludoku.Scripts.Score
                 booster.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
             }
 
-            _isBoosterEnabled = boosterEnabled;
+            _isBoosterEnabled = data.IsBusted;
         }
 
         private void StartPulse()

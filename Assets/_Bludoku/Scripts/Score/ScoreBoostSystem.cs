@@ -4,18 +4,18 @@ namespace _Bludoku.Scripts.Score
     {
         private int _movesCount;
         private int _comboCount;
-        
-        private const int MovesThreshold = 3;
-        private const int BoostCombo = 2;
+
+        private const int MovesThreshold = 10;//3;
+        private const int MinComboToMultiply = 2;
         
         public bool IsBoosted
         {
-            get => _comboCount >= BoostCombo;
+            get => _comboCount >= MinComboToMultiply;
             set
             {
                 if (value)
                 {
-                    _comboCount = BoostCombo;
+                    _comboCount = MinComboToMultiply;
                 }
                 else
                 {
@@ -40,6 +40,11 @@ namespace _Bludoku.Scripts.Score
             {
                 _comboCount = 0;
             }
+        }
+
+        public BoosterData GetBoosterData()
+        {
+            return new BoosterData(IsBoosted, _comboCount, _movesCount);
         }
     }
 }
