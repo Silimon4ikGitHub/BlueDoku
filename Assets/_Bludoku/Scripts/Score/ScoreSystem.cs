@@ -1,39 +1,38 @@
-using UnityEngine;
-
 namespace _Bludoku.Scripts.Score
 {
     public static class ScoreSystem
     {
+        private static readonly SaveLoadScore _saveLoad = new();
+
         private static int _score;
         private static int _highScore;
-        private static bool _isBoosterEnabled;
-        
-        private const string ScoreKey = "CurrentScore";
-        private const string HighScoreKey = "HighScore";
-        private const string BoosterKey = "Booster";
+        private static BoosterData _boosterData = new(false, 0, 0);
+
         private const int ScoreForSet = 1;
-        private const float BoosterMultiplier = 1.5f;
+        private const float BoosterMultiplier = 1f;
 
         public static int Score => _score;
         public static int HighScore => _highScore;
-        public static bool IsBoosterEnabled => _isBoosterEnabled;
+        public static bool IsBoosterEnabled => _boosterData.IsBusted;
+        public static BoosterData CurrentBooster => _boosterData;
 
         public static void UpdateBoosterData(BoosterData data)
         {
-            _isBoosterEnabled = data.IsBusted;
+            _boosterData = data;
         }
 
         public static void LoadScore()
         {
-            _score = PlayerPrefs.GetInt(ScoreKey, 0);
-            _highScore = PlayerPrefs.GetInt(HighScoreKey, 0);
-            _isBoosterEnabled = PlayerPrefs.GetInt(BoosterKey) == 1;
+            SaveLoadScore.LoadedScore saved = _saveLoad.LoadScore();
+            _score = saved.Score;
+            _highScore = saved.HighScore;
+            _boosterData = saved.BoosterData;
         }
         
         public static void AddSetScore(int setsCount)
         {
             int scoreToAdd = setsCount * ScoreForSet;
-            scoreToAdd = (int)(scoreToAdd * (IsBoosterEnabled ? BoosterMultiplier : 1));
+            scoreToAdd = (int)(scoreToAdd * (IsBoosterEnabled ? _boosterData.CurrentComboCount * BoosterMultiplier : 1));
             
             AddScore(scoreToAdd);
         }
@@ -57,10 +56,7 @@ namespace _Bludoku.Scripts.Score
 
         private static void SaveScore()
         {
-            PlayerPrefs.SetInt(BoosterKey, IsBoosterEnabled ? 1 : 0);
-            PlayerPrefs.SetInt(ScoreKey, Score);
-            PlayerPrefs.SetInt(HighScoreKey, HighScore);
-            PlayerPrefs.Save();
+            _saveLoad.SaveScore(Score, HighScore, _boosterData);
         }
     }
 }

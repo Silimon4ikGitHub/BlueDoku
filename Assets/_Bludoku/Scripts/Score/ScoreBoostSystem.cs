@@ -29,6 +29,7 @@ namespace _Bludoku.Scripts.Score
             if (removes == 0)
             {
                 _movesCount++;
+                _comboCount--;
             }
             else
             {
@@ -45,6 +46,12 @@ namespace _Bludoku.Scripts.Score
         public BoosterData GetBoosterData()
         {
             return new BoosterData(IsBoosted, _comboCount, _movesCount);
+        }
+
+        public void SetBoosterData(BoosterData data)
+        {
+            _comboCount = data.CurrentComboCount;
+            _movesCount = data.MovesToClearCombo;
         }
     }
 }

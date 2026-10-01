@@ -18,15 +18,17 @@ namespace _Bludoku.Scripts.Score
             booster.localScale = Vector3.zero;
         }
 
-        public void SetBoosterEnabled(BoosterData data)
+        public void UpdateBoosterView(BoosterData data)
         {
+            Debug.Log("[ScoreBoosterView] SetBoosterEnabled " + data.IsBusted.ToString() + data.CurrentComboCount.ToString() + data.MovesToClearCombo.ToString());
+            _comboCount.text = "X " + data.CurrentComboCount.ToString();
+
             if (_isBoosterEnabled == data.IsBusted)
                 return;
 
             booster.DOKill();
             _pulseTween?.Kill();
             _pulseTween = null;
-            _comboCount.text = "X " + data.CurrentComboCount.ToString();
 
             if (data.IsBusted)
             {

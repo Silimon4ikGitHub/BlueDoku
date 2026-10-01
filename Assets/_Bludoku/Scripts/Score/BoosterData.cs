@@ -1,5 +1,8 @@
+using System;
+
 namespace _Bludoku.Scripts.Score
 {
+    [Serializable]
     public class BoosterData
     {
         public bool IsBusted;
