@@ -39,7 +39,7 @@ namespace _Bludoku.Scripts.Score
 
         private void UpdateView()
         {
-            boosterView.UpdateBoosterView(_scoreBoostSystem.GetBoosterData());
+            boosterView.UpdateBoosterView(new BoosterData(false, 0, 0));
             _scoreBoostSystem.IsBoosted = false;
             scoreView.UpdateScore(false);
         }
