@@ -5,6 +5,7 @@ Added combo atmosphere animation (snow) matching the white-blue game setting; an
 Added animation for figure splash on boosted figure placement.
 Fixed bug in settings panel (vibration and sound icons were misplaced).
 Added analytics service and appropriate events to implement tracking.
+Disabled custom Gradle settings to create a stable working APK for testing new features on device without internal testing and Google services initialization.
 
 I left a simple DI system using a singleton and manual source setup. Changed the score calculation, viewing, and saving sequence (calculate -> show -> save result). Chose an event system to implement analytics; this system will help integrate other services and event subscriptions in the future. In the future, it would be better to create a separate EventManager for better DI.
 
