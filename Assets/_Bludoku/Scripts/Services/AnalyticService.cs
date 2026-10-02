@@ -27,15 +27,15 @@ namespace _Bludoku.Services
 
         public void SendAnalyticEvent(string eventName)
         {
-            Debug.Log("SendAnalyticEvent " + eventName);
+
         }
         public void SendAnalyticEvent(string eventName, string parameter, string value)
         {
-            Debug.Log("SendAnalyticEvent " + eventName);
+
         }
         public void SendAnalyticEvent(string eventName, Dictionary<string, string> data)
         {
-            Debug.Log("SendAnalyticEvent " + eventName);
+
         }
 
         private void UnsubscribeAnalyticEvenst()
