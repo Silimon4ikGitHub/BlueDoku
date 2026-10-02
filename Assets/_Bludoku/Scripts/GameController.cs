@@ -2,6 +2,8 @@ using _Bludoku.Scripts.Boards;
 using _Bludoku.Scripts.Core;
 using _Bludoku.Scripts.Score;
 using _Bludoku.Scripts.UI;
+using _Bludoku.Services;
+using System;
 using UnityEngine;
 
 namespace _Bludoku.Scripts
@@ -10,10 +12,14 @@ namespace _Bludoku.Scripts
     {
         public static GameController Instance { get; private set; }
 
+        public event Action OnGameStart;
+        public event Action OnNewGame;
+
         [SerializeField] private ScoreMediator scoreMediator;
         [SerializeField] private UIMediator uiMediator;
         [SerializeField] private Board board;
         [SerializeField] private FiguresController figuresController;
+        [SerializeField] private AnalyticService analytics;
 
         private void Awake()
         {
@@ -29,6 +35,8 @@ namespace _Bludoku.Scripts
 
             board.LoadGrid();
             figuresController.LoadFigures();
+            analytics.SubscribeAnalyticEvenst();
+            OnGameStart?.Invoke();
         }
 
         public void NewGame()
@@ -38,6 +46,7 @@ namespace _Bludoku.Scripts
             figuresController.ResetFigures();
             uiMediator.HideGameOver();
             scoreMediator.ResetScore();
+            OnNewGame?.Invoke();
         }
 
         public void SecondChance()

@@ -1,7 +1,11 @@
+using System;
+
 namespace _Bludoku.Scripts.Score
 {
     public static class ScoreSystem
     {
+        public static Action<int> OnReceiveBonus;
+
         private static readonly SaveLoadScore _saveLoad = new();
 
         private static int _score;
@@ -31,10 +35,15 @@ namespace _Bludoku.Scripts.Score
         
         public static void AddSetScore(int setsCount)
         {
-            int scoreToAdd = setsCount * ScoreForSet;
-            scoreToAdd = (int)(scoreToAdd * (IsBoosterEnabled ? _boosterData.CurrentComboCount * BoosterMultiplier : 1));
+            int scoreForSets = setsCount * ScoreForSet;
+            int scoreToAdd = (int)(scoreForSets * (IsBoosterEnabled ? _boosterData.CurrentComboCount * BoosterMultiplier : 1));
             
             AddScore(scoreToAdd);
+
+            if (IsBoosterEnabled)
+            {
+                OnReceiveBonus?.Invoke(scoreToAdd - scoreForSets);
+            }
         }
         
         public static void AddScore(int score)

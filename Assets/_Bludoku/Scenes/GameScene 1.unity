@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 34727245}
   - component: {fileID: 34727246}
   - component: {fileID: 34727247}
+  - component: {fileID: 34727248}
   m_Layer: 0
   m_Name: '[Scripts]'
   m_TagString: Untagged
@@ -159,6 +160,7 @@ MonoBehaviour:
   uiMediator: {fileID: 34727246}
   board: {fileID: 1631287398}
   figuresController: {fileID: 34727245}
+  analytics: {fileID: 34727248}
 --- !u!4 &34727243
 Transform:
   m_ObjectHideFlags: 0
@@ -236,6 +238,20 @@ MonoBehaviour:
   board: {fileID: 1631287398}
   figureParticles: {fileID: 5774820567226537956, guid: 3fc6780cf139b40268c1d690a155189c, type: 3}
   splashParticles: {fileID: 6945818159285906042, guid: dbb88317aac7a0c4aaaca46ed93438fc, type: 3}
+--- !u!114 &34727248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34727241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6f9d68ea1e8fa4f84cc9db1f09c0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardController: {fileID: 1631287398}
+  figuresController: {fileID: 34727245}
 --- !u!1 &114302688
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,6 @@ namespace _Bludoku.Scripts.Score
 
         public void UpdateBoosterView(BoosterData data)
         {
-            Debug.Log("[ScoreBoosterView] SetBoosterEnabled " + data.IsBusted.ToString() + data.CurrentComboCount.ToString() + data.MovesToClearCombo.ToString());
             _comboCount.text = "X " + data.CurrentComboCount.ToString();
 
             _effects.UpdateBoostEffects(data);

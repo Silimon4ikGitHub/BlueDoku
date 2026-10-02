@@ -5,7 +5,7 @@ namespace _Bludoku.Scripts.Score
         private int _movesCount;
         private int _comboCount;
 
-        private const int MovesThreshold = 10;//3;
+        private const int MovesThreshold = 3;
         private const int MinComboToMultiply = 2;
         
         public bool IsBoosted
