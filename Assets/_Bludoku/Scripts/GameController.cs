@@ -59,5 +59,13 @@ namespace _Bludoku.Scripts
         {
             uiMediator.ShowGameOver();
         }
+
+        public void Update()
+        {
+            if( Input.GetKeyUp(KeyCode.E))
+            {
+                NewGame();
+            }
+        }
     }
 }

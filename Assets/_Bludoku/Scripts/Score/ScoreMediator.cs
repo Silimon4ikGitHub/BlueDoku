@@ -35,12 +35,13 @@ namespace _Bludoku.Scripts.Score
             ScoreSystem.AddSetScore(result.ClearedCount);
             AddCombo(result);
             scoreView.UpdateScore();
+            ScoreSystem.SaveScore();
         }
 
         private void UpdateView()
-        {
-            boosterView.UpdateBoosterView(new BoosterData(false, 0, 0));
+        { 
             _scoreBoostSystem.IsBoosted = false;
+            boosterView.UpdateBoosterView(new BoosterData(false, 0, 0));
             scoreView.UpdateScore(false);
         }
 

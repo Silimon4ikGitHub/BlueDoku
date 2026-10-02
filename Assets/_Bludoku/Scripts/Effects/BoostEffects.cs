@@ -1,17 +1,19 @@
-using _Bludoku.Scripts.Score;
 using UnityEngine;
 
-public class BoostEffects : MonoBehaviour
+namespace _Bludoku.Scripts.Score
 {
-    [SerializeField] private ParticleSystem _snowParticles;
-
-    public void UpdateBoostEffects(BoosterData data)
+    public class BoostEffects : MonoBehaviour
     {
-        float combo = data.CurrentComboCount;
-        var main = _snowParticles.main;
-        main.startSize = new ParticleSystem.MinMaxCurve(5 * combo, 10 * combo);
+        [SerializeField] private ParticleSystem _snowParticles;
 
-        var velocity = _snowParticles.velocityOverLifetime;
-        velocity.y = new ParticleSystem.MinMaxCurve(50 * combo, 100 * combo);
+        public void UpdateBoostEffects(BoosterData data)
+        {
+            float combo = data.CurrentComboCount;
+            var main = _snowParticles.main;
+            main.startSize = new ParticleSystem.MinMaxCurve(5 * combo, 10 * combo);
+
+            var velocity = _snowParticles.velocityOverLifetime;
+            velocity.y = new ParticleSystem.MinMaxCurve(50 * combo, 100 * combo);
+        }
     }
 }

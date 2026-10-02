@@ -53,8 +53,6 @@ namespace _Bludoku.Scripts.Score
             {
                 _highScore = Score;
             }
-            
-            SaveScore();
         }
 
         public static void ResetScore()
@@ -63,7 +61,7 @@ namespace _Bludoku.Scripts.Score
             SaveScore();
         }
 
-        private static void SaveScore()
+        public static void SaveScore()
         {
             _saveLoad.SaveScore(Score, HighScore, _boosterData);
         }

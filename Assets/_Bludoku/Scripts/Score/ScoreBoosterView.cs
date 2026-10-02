@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
@@ -8,13 +7,16 @@ namespace _Bludoku.Scripts.Score
     public class ScoreBoosterView : MonoBehaviour
     {
         [SerializeField] private Transform booster;
-        [SerializeField] private TextMeshProUGUI _comboCount;
-        [SerializeField] private BoostEffects _effects;
+        [SerializeField] private TextMeshProUGUI comboCount;
+        [SerializeField] private BoostEffects effects;
         
         private bool _isBoosterEnabled;
         private int _cashedComboCount;
         private Tween _pulseTween;
         private Tween _comboCountTween;
+
+        private const float _comboTextSizeMultiplyer = 2f;
+        private const float _comboTextSizeOrigin = 80f;
 
         private void Awake()
         {
@@ -23,9 +25,9 @@ namespace _Bludoku.Scripts.Score
 
         public void UpdateBoosterView(BoosterData data)
         {
-            _comboCount.text = "X " + data.CurrentComboCount.ToString();
-
-            _effects.UpdateBoostEffects(data);
+            comboCount.text = "X " + data.CurrentComboCount.ToString();
+            comboCount.fontSize = _comboTextSizeOrigin + (data.CurrentComboCount *  _comboTextSizeMultiplyer);
+            effects.UpdateBoostEffects(data);
 
             if (data.IsBusted && _cashedComboCount != data.CurrentComboCount)
             {
@@ -68,29 +70,29 @@ namespace _Bludoku.Scripts.Score
         {
             _comboCountTween?.Kill();
 
-            _comboCount.rectTransform.localScale = Vector3.one;
-            _comboCount.rectTransform.localRotation = Quaternion.identity;
+            comboCount.rectTransform.localScale = Vector3.one;
+            comboCount.rectTransform.localRotation = Quaternion.identity;
 
             _comboCountTween = DOTween.Sequence()
                 .Append(
-                    _comboCount.rectTransform.DOScale(
+                    comboCount.rectTransform.DOScale(
                         Vector3.one * 1.25f,
                         0.15f)
                     .SetEase(Ease.OutBack))
                 .Join(
-                    _comboCount.rectTransform.DORotate(
+                    comboCount.rectTransform.DORotate(
                         new Vector3(0, 0, 12f),
                         0.15f))
                 .Append(
-                    _comboCount.rectTransform.DORotate(
+                    comboCount.rectTransform.DORotate(
                         new Vector3(0, 0, -8f),
                         0.1f))
                 .Append(
-                    _comboCount.rectTransform.DORotate(
+                    comboCount.rectTransform.DORotate(
                         Vector3.zero,
                         0.1f))
                 .Join(
-                    _comboCount.rectTransform.DOScale(
+                    comboCount.rectTransform.DOScale(
                         Vector3.one,
                         0.2f)
                     .SetEase(Ease.OutQuad));

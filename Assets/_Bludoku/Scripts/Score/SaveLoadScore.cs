@@ -28,6 +28,8 @@ namespace _Bludoku.Scripts.Score
 
         private BoosterData LoadBoosterData()
         {
+            //*** "BoosterKey" is deprecated, use only for reverse optimization ***
+
             if (PlayerPrefs.GetInt(BoosterKey) == 1)
                 return new BoosterData(true, 2, 3);
 
