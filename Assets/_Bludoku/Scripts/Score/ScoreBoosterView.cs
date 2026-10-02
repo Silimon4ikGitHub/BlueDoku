@@ -9,6 +9,7 @@ namespace _Bludoku.Scripts.Score
     {
         [SerializeField] private Transform booster;
         [SerializeField] private TextMeshProUGUI _comboCount;
+        [SerializeField] private BoostEffects _effects;
         
         private bool _isBoosterEnabled;
         private Tween _pulseTween;
@@ -22,7 +23,7 @@ namespace _Bludoku.Scripts.Score
         {
             Debug.Log("[ScoreBoosterView] SetBoosterEnabled " + data.IsBusted.ToString() + data.CurrentComboCount.ToString() + data.MovesToClearCombo.ToString());
             _comboCount.text = "X " + data.CurrentComboCount.ToString();
-
+            _effects.UpdateBoostEffects(data);
             if (_isBoosterEnabled == data.IsBusted)
                 return;
 

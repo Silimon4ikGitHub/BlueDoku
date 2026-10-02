@@ -29,7 +29,7 @@ namespace _Bludoku.Scripts.Score
             if (removes == 0)
             {
                 _movesCount++;
-                _comboCount--;
+                //_comboCount--;
             }
             else
             {
