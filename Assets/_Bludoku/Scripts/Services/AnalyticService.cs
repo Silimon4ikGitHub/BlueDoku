@@ -1,4 +1,5 @@
 using _Bludoku.Scripts;
+using _Bludoku.Scripts.Blocks;
 using _Bludoku.Scripts.Boards;
 using _Bludoku.Scripts.Core;
 using _Bludoku.Scripts.Score;
@@ -14,14 +15,14 @@ namespace _Bludoku.Services
 
         public void SubscribeAnalyticEvenst()
         {
-            GameController.Instance.OnGameStart += () => SendAnalyticEvent("game_start");
-            GameController.Instance.OnNewGame += () => SendAnalyticEvent("new_game");
-            boardController.OnFigurePlaced += (x) => SendAnalyticEvent("figures_cleared", "cleared_count", x.FiguresRemovedCount.ToString());
-            figuresController.OnGameOver += () => SendAnalyticEvent("game_over");
-            figuresController.OnFiguresPicked += (x) => SendAnalyticEvent("figures_picked", "id", x.ID.ToString());
-            figuresController.OnFigureDragged += (x) => SendAnalyticEvent("figures_dragged", "id", x.ID.ToString());
-            figuresController.OnPlaceFigure += (x) => SendAnalyticEvent("place_figure", "id", x.ID.ToString());
-            ScoreSystem.OnReceiveBonus += (x) => SendAnalyticEvent("receive_bonus", "value", x.ToString());
+            GameController.Instance.OnGameStart += OnGameStart;
+            GameController.Instance.OnNewGame += OnNewGame;
+            boardController.OnFigurePlaced += OnFigurePlaced;
+            figuresController.OnGameOver += OnGameOver;
+            figuresController.OnFiguresPicked += OnFigurePicked;
+            figuresController.OnFigureDragged += OnFigureDragged;
+            figuresController.OnPlaceFigure += OnPlaceFigure;
+            ScoreSystem.OnReceiveBonus += OnReceiveBonus;
         }
 
         public void SendAnalyticEvent(string eventName)
@@ -39,14 +40,66 @@ namespace _Bludoku.Services
 
         private void UnsubscribeAnalyticEvenst()
         {
-            GameController.Instance.OnGameStart -= () => SendAnalyticEvent("game_start");
-            GameController.Instance.OnNewGame -= () => SendAnalyticEvent("new_game");
-            boardController.OnFigurePlaced -= (x) => SendAnalyticEvent("figures_cleared", "cleared_count", x.FiguresRemovedCount.ToString());
-            figuresController.OnGameOver -= () => SendAnalyticEvent("game_over");
-            figuresController.OnFiguresPicked -= (x) => SendAnalyticEvent("figures_picked", "id", x.ID.ToString());
-            figuresController.OnFigureDragged -= (x) => SendAnalyticEvent("figures_dragged", "id", x.ID.ToString());
-            figuresController.OnPlaceFigure -= (x) => SendAnalyticEvent("place_figure", "id", x.ID.ToString());
-            ScoreSystem.OnReceiveBonus -= (x) => SendAnalyticEvent("receive_bonus", "value", x.ToString());
+            if (GameController.Instance != null)
+            {
+                GameController.Instance.OnGameStart -= OnGameStart;
+                GameController.Instance.OnNewGame -= OnNewGame;
+            }
+
+            if (boardController != null)
+            {
+                boardController.OnFigurePlaced -= OnFigurePlaced;
+            }
+
+            if (figuresController != null)
+            {
+                figuresController.OnGameOver -= OnGameOver;
+                figuresController.OnFiguresPicked -= OnFigurePicked;
+                figuresController.OnFigureDragged -= OnFigureDragged;
+                figuresController.OnPlaceFigure -= OnPlaceFigure;
+            }
+
+            ScoreSystem.OnReceiveBonus -= OnReceiveBonus;
+        }
+
+        private void OnGameStart()
+        {
+            SendAnalyticEvent("game_start");
+        }
+
+        private void OnNewGame()
+        {
+            SendAnalyticEvent("new_game");
+        }
+
+        private void OnFigurePlaced(ClearResult result)
+        {
+            SendAnalyticEvent("figures_cleared", "cleared_count", result.FiguresRemovedCount.ToString());
+        }
+
+        private void OnGameOver()
+        {
+            SendAnalyticEvent("game_over");
+        }
+
+        private void OnFigurePicked(Figure figure)
+        {
+            SendAnalyticEvent("figures_picked", "id", figure.ID.ToString());
+        }
+
+        private void OnFigureDragged(Figure figure)
+        {
+            SendAnalyticEvent("figures_dragged", "id", figure.ID.ToString());
+        }
+
+        private void OnPlaceFigure(Figure figure)
+        {
+            SendAnalyticEvent("place_figure", "id", figure.ID.ToString());
+        }
+
+        private void OnReceiveBonus(int bonus)
+        {
+            SendAnalyticEvent("receive_bonus", "value", bonus.ToString());
         }
 
         public void OnDestroy()
