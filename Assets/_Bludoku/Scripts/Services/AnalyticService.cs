@@ -13,6 +13,19 @@ namespace _Bludoku.Services
         [SerializeField] private Board boardController;
         [SerializeField] private FiguresController figuresController;
 
+        private readonly IAnalyticsProvider[] _providers =
+        {
+            new DebugAnalyticsProvider(),
+        };
+
+        private void Awake()
+        {
+            foreach (var provider in _providers)
+            {
+                provider.Initialize();
+            }
+        }
+
         public void SubscribeAnalyticEvenst()
         {
             GameController.Instance.OnGameStart += OnGameStart;
@@ -27,15 +40,20 @@ namespace _Bludoku.Services
 
         public void SendAnalyticEvent(string eventName)
         {
-
+            SendAnalyticEvent(eventName, null);
         }
+
         public void SendAnalyticEvent(string eventName, string parameter, string value)
         {
-
+            SendAnalyticEvent(eventName, new Dictionary<string, string> { { parameter, value } });
         }
-        public void SendAnalyticEvent(string eventName, Dictionary<string, string> data)
-        {
 
+        public void SendAnalyticEvent(string eventName, IReadOnlyDictionary<string, string> parameters)
+        {
+            foreach (var provider in _providers)
+            {
+                provider.SendEvent(eventName, parameters);
+            }
         }
 
         private void UnsubscribeAnalyticEvenst()
