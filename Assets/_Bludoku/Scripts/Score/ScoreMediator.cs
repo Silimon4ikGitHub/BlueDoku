@@ -41,10 +41,10 @@ namespace _Bludoku.Scripts.Score
         }
 
         private void UpdateView()
-        { 
-            _scoreBoostSystem.IsBoosted = false;
+        {
+            _scoreBoostSystem.SetBoosterData(new BoosterData(false, 0, 0));
+            boosterView.UpdateBoosterView(_scoreBoostSystem.GetBoosterData());
             _scoreBoostSystem.Save();
-            boosterView.UpdateBoosterView(new BoosterData(false, 0, 0));
             scoreView.UpdateScore(false);
         }
 
