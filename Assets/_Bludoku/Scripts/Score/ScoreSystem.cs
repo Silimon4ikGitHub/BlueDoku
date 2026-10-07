@@ -29,7 +29,6 @@ namespace _Bludoku.Scripts.Score
             SaveLoadScore.LoadedScore saved = _saveLoad.LoadScore();
             _score = saved.Score;
             _highScore = saved.HighScore;
-            _boosterData = saved.BoosterData;
         }
         
         public static void AddSetScore(int setsCount)
@@ -62,7 +61,7 @@ namespace _Bludoku.Scripts.Score
 
         public static void SaveScore()
         {
-            _saveLoad.SaveScore(Score, HighScore, _boosterData);
+            _saveLoad.SaveScore(Score, HighScore);
         }
     }
 }

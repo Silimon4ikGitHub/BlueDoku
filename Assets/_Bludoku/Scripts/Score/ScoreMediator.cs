@@ -19,7 +19,8 @@ namespace _Bludoku.Scripts.Score
         private void Start()
         {
             ScoreSystem.LoadScore();
-            _scoreBoostSystem.SetBoosterData(ScoreSystem.CurrentBooster);
+            _scoreBoostSystem.Load();
+            ScoreSystem.UpdateBoosterData(_scoreBoostSystem.GetBoosterData());
             boosterView.UpdateBoosterView(_scoreBoostSystem.GetBoosterData());
             scoreView.UpdateScore(false);
         }
@@ -36,11 +37,13 @@ namespace _Bludoku.Scripts.Score
             ScoreSystem.AddSetScore(result.ClearedCount);
             scoreView.UpdateScore();
             ScoreSystem.SaveScore();
+            _scoreBoostSystem.Save();
         }
 
         private void UpdateView()
         { 
             _scoreBoostSystem.IsBoosted = false;
+            _scoreBoostSystem.Save();
             boosterView.UpdateBoosterView(new BoosterData(false, 0, 0));
             scoreView.UpdateScore(false);
         }

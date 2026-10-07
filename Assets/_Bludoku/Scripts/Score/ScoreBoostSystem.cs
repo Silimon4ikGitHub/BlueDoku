@@ -2,6 +2,8 @@ namespace _Bludoku.Scripts.Score
 {
     public class ScoreBoostSystem
     {
+        private readonly SaveLoadBooster _saveLoad = new();
+
         private int _movesCount;
         private int _comboCount;
 
@@ -52,6 +54,16 @@ namespace _Bludoku.Scripts.Score
         {
             _comboCount = data.CurrentComboCount;
             _movesCount = data.MovesToClearCombo;
+        }
+
+        public void Load()
+        {
+            SetBoosterData(_saveLoad.LoadBooster());
+        }
+
+        public void Save()
+        {
+            _saveLoad.SaveBooster(GetBoosterData());
         }
     }
 }
