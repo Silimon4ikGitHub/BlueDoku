@@ -2,7 +2,6 @@ using _Bludoku.Scripts.Boards;
 using _Bludoku.Scripts.Core;
 using _Bludoku.Scripts.Score;
 using _Bludoku.Scripts.UI;
-using _Bludoku.Services;
 using System;
 using UnityEngine;
 
@@ -19,7 +18,6 @@ namespace _Bludoku.Scripts
         [SerializeField] private UIMediator uiMediator;
         [SerializeField] private Board board;
         [SerializeField] private FiguresController figuresController;
-        [SerializeField] private AnalyticService analytics;
 
         private void Awake()
         {
@@ -35,7 +33,6 @@ namespace _Bludoku.Scripts
 
             board.LoadGrid();
             figuresController.LoadFigures();
-            analytics.SubscribeAnalyticEvenst();
             OnGameStart?.Invoke();
         }
 

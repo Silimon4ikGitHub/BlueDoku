@@ -10,6 +10,7 @@ namespace _Bludoku.Services
 {
     public sealed class AnalyticService : MonoBehaviour
     {
+        [SerializeField] private GameController gameController;
         [SerializeField] private Board boardController;
         [SerializeField] private FiguresController figuresController;
 
@@ -26,16 +27,40 @@ namespace _Bludoku.Services
             }
         }
 
-        public void SubscribeAnalyticEvenst()
+        private void OnEnable()
         {
-            GameController.Instance.OnGameStart += OnGameStart;
-            GameController.Instance.OnNewGame += OnNewGame;
+            gameController.OnGameStart += OnGameStart;
+            gameController.OnNewGame += OnNewGame;
             boardController.OnFigurePlaced += OnFigurePlaced;
             figuresController.OnGameOver += OnGameOver;
             figuresController.OnFiguresPicked += OnFigurePicked;
             figuresController.OnFigureDragged += OnFigureDragged;
             figuresController.OnPlaceFigure += OnPlaceFigure;
             ScoreSystem.OnReceiveBonus += OnReceiveBonus;
+        }
+
+        private void OnDisable()
+        {
+            if (gameController != null)
+            {
+                gameController.OnGameStart -= OnGameStart;
+                gameController.OnNewGame -= OnNewGame;
+            }
+
+            if (boardController != null)
+            {
+                boardController.OnFigurePlaced -= OnFigurePlaced;
+            }
+
+            if (figuresController != null)
+            {
+                figuresController.OnGameOver -= OnGameOver;
+                figuresController.OnFiguresPicked -= OnFigurePicked;
+                figuresController.OnFigureDragged -= OnFigureDragged;
+                figuresController.OnPlaceFigure -= OnPlaceFigure;
+            }
+
+            ScoreSystem.OnReceiveBonus -= OnReceiveBonus;
         }
 
         public void SendAnalyticEvent(string eventName)
@@ -54,30 +79,6 @@ namespace _Bludoku.Services
             {
                 provider.SendEvent(eventName, parameters);
             }
-        }
-
-        private void UnsubscribeAnalyticEvenst()
-        {
-            if (GameController.Instance != null)
-            {
-                GameController.Instance.OnGameStart -= OnGameStart;
-                GameController.Instance.OnNewGame -= OnNewGame;
-            }
-
-            if (boardController != null)
-            {
-                boardController.OnFigurePlaced -= OnFigurePlaced;
-            }
-
-            if (figuresController != null)
-            {
-                figuresController.OnGameOver -= OnGameOver;
-                figuresController.OnFiguresPicked -= OnFigurePicked;
-                figuresController.OnFigureDragged -= OnFigureDragged;
-                figuresController.OnPlaceFigure -= OnPlaceFigure;
-            }
-
-            ScoreSystem.OnReceiveBonus -= OnReceiveBonus;
         }
 
         private void OnGameStart()
@@ -118,11 +119,6 @@ namespace _Bludoku.Services
         private void OnReceiveBonus(int bonus)
         {
             SendAnalyticEvent("receive_bonus", "value", bonus.ToString());
-        }
-
-        public void OnDestroy()
-        {
-            UnsubscribeAnalyticEvenst();
         }
     }
 }

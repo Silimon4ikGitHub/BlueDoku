@@ -160,7 +160,6 @@ MonoBehaviour:
   uiMediator: {fileID: 34727246}
   board: {fileID: 1631287398}
   figuresController: {fileID: 34727245}
-  analytics: {fileID: 34727248}
 --- !u!4 &34727243
 Transform:
   m_ObjectHideFlags: 0
@@ -250,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6f9d68ea1e8fa4f84cc9db1f09c0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 34727242}
   boardController: {fileID: 1631287398}
   figuresController: {fileID: 34727245}
 --- !u!1 &114302688
