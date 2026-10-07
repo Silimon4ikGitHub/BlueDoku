@@ -13,7 +13,6 @@ namespace _Bludoku.Scripts.Score
         private static BoosterData _boosterData = new(false, 0, 0);
 
         private const int ScoreForSet = 1;
-        private const float BoosterMultiplier = 1f;
 
         public static int Score => _score;
         public static int HighScore => _highScore;
@@ -36,7 +35,7 @@ namespace _Bludoku.Scripts.Score
         public static void AddSetScore(int setsCount)
         {
             int scoreForSets = setsCount * ScoreForSet;
-            int scoreToAdd = (int)(scoreForSets * (IsBoosterEnabled ? _boosterData.CurrentComboCount * BoosterMultiplier : 1));
+            int scoreToAdd = (int)(scoreForSets * (IsBoosterEnabled ? _boosterData.CurrentComboCount : 1));
             
             AddScore(scoreToAdd);
 

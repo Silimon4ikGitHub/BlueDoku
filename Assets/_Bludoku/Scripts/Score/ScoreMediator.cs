@@ -32,8 +32,8 @@ namespace _Bludoku.Scripts.Score
 
         private void FigurePlaced(ClearResult result)
         {
-            ScoreSystem.AddSetScore(result.ClearedCount);
             AddCombo(result);
+            ScoreSystem.AddSetScore(result.ClearedCount);
             scoreView.UpdateScore();
             ScoreSystem.SaveScore();
         }
