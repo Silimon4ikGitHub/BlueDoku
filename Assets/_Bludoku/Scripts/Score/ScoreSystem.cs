@@ -1,28 +1,17 @@
-using System;
 
 namespace _Bludoku.Scripts.Score
 {
     public static class ScoreSystem
     {
-        public static Action<int> OnReceiveBonus;
-
         private static readonly SaveLoadScore _saveLoad = new();
 
         private static int _score;
         private static int _highScore;
-        private static BoosterData _boosterData = new(false, 0, 0);
 
         private const int ScoreForSet = 1;
 
         public static int Score => _score;
         public static int HighScore => _highScore;
-        public static bool IsBoosterEnabled => _boosterData.IsBusted;
-        public static BoosterData CurrentBooster => _boosterData;
-
-        public static void UpdateBoosterData(BoosterData data)
-        {
-            _boosterData = data;
-        }
 
         public static void LoadScore()
         {
@@ -31,17 +20,12 @@ namespace _Bludoku.Scripts.Score
             _highScore = saved.HighScore;
         }
         
-        public static void AddSetScore(int setsCount)
+        public static void AddSetScore(int setsCount, int multiplier = 1)
         {
-            int scoreForSets = setsCount * ScoreForSet;
-            int scoreToAdd = (int)(scoreForSets * (IsBoosterEnabled ? _boosterData.CurrentComboCount : 1));
+            int scoreForSets = CalculateScoreBySetsCount(setsCount);
+            int scoreToAdd = (scoreForSets * multiplier);
             
             AddScore(scoreToAdd);
-
-            if (IsBoosterEnabled)
-            {
-                OnReceiveBonus?.Invoke(scoreToAdd - scoreForSets);
-            }
         }
         
         public static void AddScore(int score)
@@ -62,6 +46,11 @@ namespace _Bludoku.Scripts.Score
         public static void SaveScore()
         {
             _saveLoad.SaveScore(Score, HighScore);
+        }
+
+        public static int CalculateScoreBySetsCount(int setsCount)
+        {
+            return setsCount * ScoreForSet;
         }
     }
 }

@@ -29,20 +29,20 @@ namespace _Bludoku.Scripts.Score
             comboCount.fontSize = _comboTextSizeOrigin + (data.CurrentComboCount *  _comboTextSizeMultiplyer);
             effects.UpdateBoostEffects(data);
 
-            if (data.IsBusted && _cashedComboCount != data.CurrentComboCount)
+            if (data.IsBoosted && _cashedComboCount != data.CurrentComboCount)
             {
                 PlayComboCountTextAnimation();
                 _cashedComboCount = data.CurrentComboCount;
             }
 
-            if (_isBoosterEnabled == data.IsBusted)
+            if (_isBoosterEnabled == data.IsBoosted)
                 return;
 
             booster.DOKill();
             _pulseTween?.Kill();
             _pulseTween = null;
 
-            if (data.IsBusted)
+            if (data.IsBoosted)
             {
                 booster.transform.DOScale(Vector3.one, 0.8f)
                     .SetEase(Ease.OutElastic)
@@ -53,7 +53,7 @@ namespace _Bludoku.Scripts.Score
                 booster.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
             }
 
-            _isBoosterEnabled = data.IsBusted;
+            _isBoosterEnabled = data.IsBoosted;
         }
 
         private void StartPulse()

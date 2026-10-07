@@ -5,13 +5,13 @@ namespace _Bludoku.Scripts.Score
     [Serializable]
     public class BoosterData
     {
-        public bool IsBusted;
+        public bool IsBoosted;
         public int CurrentComboCount;
         public int MovesToClearCombo;
 
-        public BoosterData(bool isBusted, int currentComboCount, int movesToClearCombo)
+        public BoosterData(bool isBoosted, int currentComboCount, int movesToClearCombo)
         {
-            IsBusted = isBusted;
+            IsBoosted = isBoosted;
             CurrentComboCount = currentComboCount;
             MovesToClearCombo = movesToClearCombo;
         }

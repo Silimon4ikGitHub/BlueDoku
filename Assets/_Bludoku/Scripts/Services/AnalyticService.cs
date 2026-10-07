@@ -13,6 +13,7 @@ namespace _Bludoku.Services
         [SerializeField] private GameController gameController;
         [SerializeField] private Board boardController;
         [SerializeField] private FiguresController figuresController;
+        [SerializeField] private ScoreMediator scoreMediator;
 
         private readonly IAnalyticsProvider[] _providers =
         {
@@ -36,7 +37,7 @@ namespace _Bludoku.Services
             figuresController.OnFiguresPicked += OnFigurePicked;
             figuresController.OnFigureDragged += OnFigureDragged;
             figuresController.OnPlaceFigure += OnPlaceFigure;
-            ScoreSystem.OnReceiveBonus += OnReceiveBonus;
+            scoreMediator.OnReceiveBonus += OnReceiveBonus;
         }
 
         private void OnDisable()
@@ -60,7 +61,10 @@ namespace _Bludoku.Services
                 figuresController.OnPlaceFigure -= OnPlaceFigure;
             }
 
-            ScoreSystem.OnReceiveBonus -= OnReceiveBonus;
+            if (scoreMediator != null)
+            {
+                scoreMediator.OnReceiveBonus -= OnReceiveBonus;
+            }
         }
 
         public void SendAnalyticEvent(string eventName)

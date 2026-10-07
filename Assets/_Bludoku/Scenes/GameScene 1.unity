@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1631287398}
+  scoreMediator: {fileID: 34727244}
   figureParticles: {fileID: 5774820567226537956, guid: 3fc6780cf139b40268c1d690a155189c, type: 3}
   splashParticles: {fileID: 6945818159285906042, guid: dbb88317aac7a0c4aaaca46ed93438fc, type: 3}
 --- !u!114 &34727248
@@ -252,6 +253,7 @@ MonoBehaviour:
   gameController: {fileID: 34727242}
   boardController: {fileID: 1631287398}
   figuresController: {fileID: 34727245}
+  scoreMediator: {fileID: 34727244}
 --- !u!1 &114302688
 GameObject:
   m_ObjectHideFlags: 0
